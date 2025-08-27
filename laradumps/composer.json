@@ -1,0 +1,17 @@
+{
+    "name": "your-project/example",
+    "description": "Example project using LaraDumps PHP 7.4",
+    "type": "project",
+    "require": {
+        "php": "^7.4",
+        "laradumps/laradumps-core-php74": "*"
+    },
+    "repositories": [
+        {
+            "type": "path",
+            "url": "./laradumps-core-php74"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true
+}
