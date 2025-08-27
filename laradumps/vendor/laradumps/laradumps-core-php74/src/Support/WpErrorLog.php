@@ -237,9 +237,17 @@ class WpErrorLog
 
         $traces = array_filter(
             debug_backtrace(DEBUG_BACKTRACE_IGNORE_ARGS, 10), 
-            fn($trace) => !str_contains(strtolower($trace['function']), 'laradumps')
+            fn($trace) => !(str_contains(strtolower($trace['function']), 'laradumps') || str_contains(strtolower($trace['file']), 'wp-includes'))
         );
 
+        $traces = array_values($traces);
+
+        if (str_contains(strtolower($file), 'wp-includes')) {
+            $file = $traces[0]['file'];
+            $line = $traces[0]['line'];
+            unset($traces[0]);
+        }
+        
         try {
             $snippet = (new CodeSnippet())->getCodeSnippetFromTrace(
                 $traces,
@@ -266,6 +274,7 @@ class WpErrorLog
         if ($snippet) {
             $payload->setCodeSnippet($snippet);
         }
+        
         (new LaraDumps())->send($payload);
     }
 

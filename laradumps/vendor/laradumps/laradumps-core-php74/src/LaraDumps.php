@@ -360,7 +360,7 @@ class LaraDumps
         $iterableFrames = $backtrace->frames();
 
         foreach ($iterableFrames as $frame) {
-            if (str_contains(strtolower($frame->file), 'laradumps') || str_contains(strtolower($frame->file), 'unknown')) {
+            if (str_contains(strtolower($frame->file), 'laradumps') || str_contains(strtolower($frame->file), 'unknown') || str_contains(strtolower($frame->file), 'wp-includes')) {
                 continue;
             }
 
